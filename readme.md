@@ -77,7 +77,7 @@ function errorLogger( err, req, res )
 ```javascript
 var express = require( 'express' );
 var app = express();
-var errorLogger = require( 'error-logger' );
+var errorLogger = require( 'http-server-request-handlers-error-logger' );
 
 // ... middleware declarations
 // ... route declarations
