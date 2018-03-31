@@ -4,6 +4,8 @@
 
 /**
  * @param {Error} err
+ * @param {number} err.code
+ * @param {number} err.errorCode
  * @param {number} err.status
  * @param {number} err.statusCode
  *
@@ -29,7 +31,7 @@ function getError( err, req ) {
   error.originalUrl = req.originalUrl || null
   error.remoteAddress = req.headers[ 'x-forwarded-for' ] || req.headers[ 'x-real-ip' ] || req.connection.remoteAddress || null
   error.session = req.session || null
-  error.statusCode = err.status || err.statusCode || 500
+  error.statusCode = err.code || err.errorCode || err.status || err.statusCode || 500
 
   return error
 }
