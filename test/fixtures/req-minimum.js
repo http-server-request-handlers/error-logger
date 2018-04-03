@@ -2,6 +2,9 @@
 
 var req = {
   connection: {},
+  get: function () {
+    return 'application/json'
+  },
   headers: {}
 }
 

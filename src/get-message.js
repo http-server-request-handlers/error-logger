@@ -3,27 +3,24 @@
 /**
  * @param {Error} err
  *
- * @param {ServerResponse} res
- * @param {Function} res.get
+ * @param {IncomingMessage} req
+ * @param {Function} req.get
  *
  * @param {string} env
  *
  * @returns {Object|string}
  */
-function getMessage( err, res, env ) {
-  var content_type = res.get( 'content-type' ) || res.get( 'Content-Type' ) || ''
+function getMessage( err, req, env ) {
+  var content_type = req.get( 'content-type' ) || ''
+  var message = err.toString()
 
   if ( content_type.indexOf( 'application/json' ) !== -1 ) {
-    return {
-      error: err.toString()
-    }
+    message = { error: { message: err.toString() } }
+  } else if ( env === 'development' ) {
+    message = '<pre>' + err.stack
   }
 
-  if ( env === 'development' ) {
-    return '<pre>' + err.stack
-  }
-
-  return err.toString()
+  return message
 }
 
 module.exports = getMessage

@@ -38,7 +38,7 @@ tap.test( 'getMessage for res json/application',
 
     actual = getMessage( err, res )
 
-    t.same( actual, { error: 'Error: oops!' }, 'should be set to the error message as an object' )
+    t.same( actual, { error: { message: 'Error: oops!' } }, 'should be set to the error message as an object' )
     t.end()
   }
 )

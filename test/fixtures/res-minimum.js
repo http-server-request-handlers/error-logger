@@ -6,6 +6,11 @@ var res = {
   },
   send: function ( msg ) {
     return msg
+  },
+  status: function ( code ) {
+    this.statusCode = code
+
+    return this
   }
 }
 

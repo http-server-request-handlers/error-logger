@@ -32,14 +32,13 @@ var getMessage = require( './get-message' )
 function errorLogger( err, req, res, next ) {
   var error = getError( err, req )
 
-  res.statusCode = error.statusCode
   console.error( { error: error } )
 
   if ( error.statusCode !== 404 ) {
     console.error( err.stack )
   }
 
-  res.send( getMessage( err, res, process.env.NODE_ENV ) )
+  res.status( error.statusCode ).send( getMessage( err, req, process.env.NODE_ENV ) )
 }
 
 module.exports = errorLogger
