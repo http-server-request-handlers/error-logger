@@ -30,13 +30,16 @@ it implements the following:
 {
   error: {
     body: req.body || null,
+    code: err.code || null,
     date: new Date(),
+    errorCode: err.errorCode || null,
     headers: req.headers || null,
     message: err.toString() || null,
     method: req.method || null,
     originalUrl: req.originalUrl || null,
     remoteAddress: req.headers[ 'x-forwarded-for' ] || req.headers[ 'x-real-ip' ] || req.connection.remoteAddress || null,
     session: req.session || null,
+    status: err.status || null,
     statusCode: err.status || err.statusCode || 500
   }
 }
@@ -44,10 +47,17 @@ it implements the following:
 * adds the error `statusCode` to `res` as `res.statusCode`
 * logs the error object to `console.error`
 * logs the `err.stack` to `console.error` if the `error.statusCode` is not equal to `404`
-* creates a message format based on the current response and environment
+* creates a message format based on the current request `content-type` and server environment
     * when the response `content-type` is `application/json`
-        * a json with a property `error` set to the `err.message`
-    * when `NODE_ENV` is set to `development`
+         ```javascript
+         error: {
+           code: err.code || null,
+           errorCode: err.errorCode || null,
+           message: err.toString(),
+           status: err.status || null,
+           statusCode: err.statusCode || null
+         }
+    * when `NODE_ENV` is set to `development` and `content-type` is not `application/json`
         * the `err.stack`
     * otherwise the `err.message`
 

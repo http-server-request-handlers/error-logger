@@ -10,12 +10,20 @@
  *
  * @returns {Object|string}
  */
-function getMessage( err, req, env ) {
+function getResponseMessage( err, req, env ) {
   var content_type = req.get( 'content-type' ) || ''
   var message = err.toString()
 
   if ( content_type.indexOf( 'application/json' ) !== -1 ) {
-    message = { error: { message: err.toString() } }
+    message = {
+      error: {
+        code: err.code || null,
+        errorCode: err.errorCode || null,
+        message: err.toString(),
+        status: err.status || null,
+        statusCode: err.statusCode || null
+      }
+    }
   } else if ( env === 'development' ) {
     message = '<pre>' + err.stack
   }
@@ -23,4 +31,4 @@ function getMessage( err, req, env ) {
   return message
 }
 
-module.exports = getMessage
+module.exports = getResponseMessage

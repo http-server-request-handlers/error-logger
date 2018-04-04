@@ -7,8 +7,8 @@
 /**
  * module dependencies
  */
-var getError = require( './get-error' )
-var getMessage = require( './get-message' )
+var getServerError = require( './get-server-error' )
+var getResponseMessage = require( './get-response-message' )
 
 /**
  * this middleware needs to be added after all “non-error” middleware in the application.
@@ -30,7 +30,7 @@ var getMessage = require( './get-message' )
  * @returns {undefined}
  */
 function errorLogger( err, req, res, next ) {
-  var error = getError( err, req )
+  var error = getServerError( err, req )
 
   console.error( { error: error } )
 
@@ -38,7 +38,7 @@ function errorLogger( err, req, res, next ) {
     console.error( err.stack )
   }
 
-  res.status( error.statusCode ).send( getMessage( err, req, process.env.NODE_ENV ) )
+  res.status( error.statusCode ).send( getResponseMessage( err, req, process.env.NODE_ENV ) )
 }
 
 module.exports = errorLogger

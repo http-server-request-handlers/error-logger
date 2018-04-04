@@ -4,9 +4,9 @@
 
 /**
  * @param {Error} err
- * @param {number} err.code
- * @param {number} err.errorCode
- * @param {number} err.status
+ * @param {number|string} err.code
+ * @param {number|string} err.errorCode
+ * @param {number|string} err.status
  * @param {number} err.statusCode
  *
  * @param {IncomingMessage} req
@@ -20,20 +20,23 @@
  *
  * @returns {Object}
  */
-function getError( err, req ) {
+function getServerError( err, req ) {
   var error = {}
 
   error.body = req.body || null
+  error.code = err.code || null
   error.date = new Date()
+  error.errorCode = err.errorCode || null
   error.headers = req.headers
   error.message = err.toString()
   error.method = req.method || null
   error.originalUrl = req.originalUrl || null
   error.remoteAddress = req.headers[ 'x-forwarded-for' ] || req.headers[ 'x-real-ip' ] || req.connection.remoteAddress || null
   error.session = req.session || null
-  error.statusCode = err.status || err.statusCode || 500
+  error.status = err.status || null
+  error.statusCode = err.statusCode || 500
 
   return error
 }
 
-module.exports = getError
+module.exports = getServerError
