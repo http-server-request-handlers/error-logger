@@ -40,7 +40,7 @@ it implements the following:
     remoteAddress: req.headers[ 'x-forwarded-for' ] || req.headers[ 'x-real-ip' ] || req.connection.remoteAddress || null,
     session: req.session || null,
     status: err.status || null,
-    statusCode: err.status || err.statusCode || 500
+    statusCode: err.statusCode || 500
   }
 }
 ````
@@ -55,7 +55,7 @@ it implements the following:
            errorCode: err.errorCode || null,
            message: err.toString(),
            status: err.status || null,
-           statusCode: err.statusCode || null
+           statusCode: err.statusCode || 500
          }
     * when `NODE_ENV` is set to `development` and `content-type` is not `application/json`
         * the `err.stack`

@@ -21,7 +21,7 @@ function getResponseMessage( err, req, env ) {
         errorCode: err.errorCode || null,
         message: err.toString(),
         status: err.status || null,
-        statusCode: err.statusCode || null
+        statusCode: err.statusCode || 500
       }
     }
   } else if ( env === 'development' ) {

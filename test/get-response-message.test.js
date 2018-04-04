@@ -6,7 +6,7 @@
 var getResponseMessage = require( '../src/get-response-message' )
 var tap = require( 'tap' )
 
-tap.test( 'getMessage for minimum res when NODE_ENV is set to development',
+tap.test( 'getResponseMessage for minimum res when NODE_ENV is set to development',
   function ( t ) {
     var err = new Error( 'oops!' )
     var res = require( './fixtures/res-minimum' )
@@ -31,15 +31,16 @@ tap.test( 'getMessage for minimum res when NODE_ENV is not set to development',
   }
 )
 
-tap.test( 'getMessage for res json/application',
+tap.test( 'getResponseMessage for res json/application',
   function ( t ) {
     var err = new Error( 'oops!' )
     var res = require( './fixtures/res-json-application' )
     var actual
+    var expected = require( './fixtures/message-json-application.js' )
 
     actual = getResponseMessage( err, res )
 
-    t.same( actual, { error: { message: 'Error: oops!' } }, 'should be set to the error message as an object' )
+    t.same( actual, expected, 'should be set to the error message as an object' )
     t.end()
   }
 )
